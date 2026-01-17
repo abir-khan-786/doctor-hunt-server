@@ -14,8 +14,23 @@ datasource db {
 }
 
 model Users {
-  id       String  @id @default(cuid())
-  email    String  @unique
-  name     String?
-  password String
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  password     String
+  role         String        @default("USER")
+  appointments Appointment[]
+}
+
+model Appointment {
+  id          String   @id @default(cuid())
+  date        DateTime
+  title       String
+  timeSlot    String
+  status      String   @default("PENDING")
+  patientName String
+  patientAge  Int
+  phoneNumber String
+  userId      String
+  user        Users    @relation(fields: [userId], references: [id])
 }
